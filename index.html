@@ -41,7 +41,12 @@
         <![endif]-->
 
 
-
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+        <script src="js/FluxiStore.js"></script>
+        <script>
+            var fluxiStore = new FluxiStore();
+        </script>
 
         <section id="cm_contents">
             <div class="wrap_contents no_border">
@@ -67,7 +72,7 @@
                                     <!--component : existing_recruits e-->
 
                                     <!--component : job_category s-->
-                                    <div class="career_chk_area charge_job">
+                                    <div id="job_category" class="career_chk_area charge_job">
                                         <span class="chk_list_tit">담당업무</span>
                                         <div class="task_input_area">
                                             <div>
@@ -184,6 +189,49 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <script>
+                                        //1. group을 정의
+                                        var storeGroup = 'job_category';
+
+                                        //2. data의 구조 정의
+                                        tmpData = {
+                                            "code" : {
+                                                "123" : "영업·고객상담",
+                                                "234" : "IT·인터넷 > 서버·네트워크·보안"
+                                            },
+                                            "keyword" : {
+                                                "345" : "일반영업",
+                                                "45" : "보안기술"
+                                            },
+                                        };
+                                        fluxiStore.setInitialData(storeGroup, tmpData);
+
+                                        //3. 데이터(store)가 바뀌면 UI에 어떻게 적용할 지 등록
+                                        fluxiStore.storeChangeListener(storeGroup, function (data) {
+                                            var template = '' +
+                                                '<li>' +
+                                                '    <span class="job_name">{{keyword-name}}</span>' +
+                                                '    <button type="button" class="btn_close_lpop01" data-keyword="{{keyword}}">닫기</button>' +
+                                                '</li>';
+                                            var tmpContentArr = [];
+                                            if (data && data.keyword) {
+                                                for (var i in data.keyword) {
+                                                    if (data.keyword.hasOwnProperty(i)) {
+                                                        tmpContentArr.push(
+                                                                template.replace('{{keyword}}', i)
+                                                                        .replace('{{keyword-name}}', data.keyword[i])
+                                                        );
+                                                    }
+                                                }
+                                            }
+                                            $('#' + storeGroup).find('.task_list').html(tmpContentArr.join('\n'));
+                                        });
+                                        fluxiStore.emitChangeListener(storeGroup);
+
+                                        //4. UI event binding
+                                        $(storeGroup).on('click', function () {
+                                        });
+                                    </script>
                                     <!--component : job_category e-->
 
                                     <!--component : career s-->
@@ -226,8 +274,6 @@
 
 
 
-        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
