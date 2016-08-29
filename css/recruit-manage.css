@@ -1,0 +1,787 @@
+
+@CHARSET "EUC-KR";
+
+#recruitForm #stepArea1, #stepArea2, #stepArea3 {
+    padding: 65px 0 18px 0;
+}
+
+#recruitForm .inputCategory {
+    font-weight: bold;
+}
+
+#recruitForm .textarea {
+    padding: 3px;
+}
+
+#recruitForm .requiredCategory {
+    color: #cc0000;
+}
+
+#recruitForm .icon-category {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    top: -1px;
+    display: inline-block;
+    background: transparent url('//www.saraminimage.co.kr/button/bu_01.gif') no-repeat right center;
+}
+
+#recruitForm .categoryImgPadding {
+    padding-bottom: 3px;
+}
+
+#recruitForm .recruit-title #title,#homepage {
+    width: 98%;
+    height: 30px;
+    border: 1px;
+    border-color: #d5e4f1;
+    border-style: solid;
+    font-size: 16px;
+    font-weight: bold;
+    color: #444444;
+    padding: 5px 0px 0px 10px;
+}
+
+#recruitForm .titleBackImg {
+    background: transparent url('//www.saraminimage.co.kr/recruit/recruit_view/new/sub_text.gif') no-repeat left center;
+}
+
+#recruitForm .titleBackImgDel {
+    background: '';
+}
+
+#shotcut .shotcutTitle {
+    height: 20px;
+    vertical-align: top;
+    background-color: #f3f9fe;
+    padding-left: 7px;
+}
+
+#recruitForm .intro-product {
+    margin-top: 20px;
+}
+
+#shotcut .shotcutStep {
+    font-weight: bold;
+    color: #ed6703;
+}
+
+#shotcut .shotcutTextPadding {
+    padding: 4px 0;
+}
+
+#shotcut .shotcutImgPadding {
+    padding-bottom: 2px;
+}
+
+#shotcut .icon-bulletPoints {
+    position: relative;
+    width: 2px;
+    height: 2px;
+    display: inline-block;
+    background: transparent url('//www.saraminimage.co.kr/recruit/recruit_view/new/blt_sky.gif') no-repeat right center;
+}
+
+#shotcut .icon-nemo {
+    width: 27px;
+    height: 12px;
+    display: inline-block;
+    background: transparent url('//www.saraminimage.co.kr/common/box.gif') no-repeat right center;
+}
+
+#shotcut .icon-new {
+    width: 32px;
+    height: 14px;
+    display: inline-block;
+    background: transparent url('//www.saraminimage.co.kr/person/new/icon_resume_new_002.gif') no-repeat center center;
+}
+
+#shotcut .icon-hot {
+    width: 32px;
+    height: 14px;
+    display: inline-block;
+    background: transparent url('//www.saraminimage.co.kr/recruit/recruit_view/new/icon_hot.gif') no-repeat center center;
+}
+
+#shotcut span[class=icon-hot] {
+    top: 2px;
+    bottom: 0px;
+}
+
+#a_title {
+    padding-bottom: 40px;
+}
+
+#a_title .inputPadding {
+    padding: 3px 0 3px 10px;
+}
+
+#a_homepage {
+    padding-bottom: 35px;
+}
+
+#a_homepage .inputPadding {
+    padding: 3px 0 3px 10px;
+}
+
+#a_homepage #homepage {
+    width: 98%;
+    height: 30px;
+    border: 1px;
+    border-color: #d5e4f1;
+    border-style: solid;
+    font-size: 16px;
+    font-weight: bold;
+    color: #444444;
+    padding: 5px 0px 0px 10px;
+}
+
+#a_photo {
+}
+
+#a_ourCompany {
+    padding-bottom: 40px;
+}
+
+#ourCompanyStatus {
+    padding-bottom: 10px;
+}
+
+#a_matching {
+    width: 695px;
+    padding-bottom: 40px;
+}
+
+#a_position {
+}
+
+#a_preferred {
+    padding-bottom: 40px;
+}
+
+#a_work {
+    padding-bottom: 40px;
+}
+
+#a_contents {
+    padding-bottom: 40px;
+}
+
+#a_hrrep {
+}
+
+#a_contents2 {
+    padding-bottom: 40px;
+}
+
+#a_howtoapply {
+    padding-bottom: 40px;
+}
+
+#a_contact {
+    padding-bottom: 20px;
+}
+
+.noPhoto {
+    display: none;
+    padding-bottom: 40px;
+}
+
+.noLogo {
+    display: none;
+    padding-bottom: 40px;
+}
+
+.insertLogoPhoto {
+    display: none;
+    padding-bottom: 40px;
+}
+
+.logoPhoto {
+    display: none;
+    padding-bottom: 40px;
+}
+
+.noLogoPhoto {
+    display: none;
+    padding-bottom: 40px;
+}
+
+.displayInline {
+    display: inline-block;
+}
+
+.displayNone {
+    display: none;
+}
+
+.noLogoPhotoImg {
+    position: relative;
+    height: 276px;
+    background: transparent url('//www.saraminimage.co.kr/common/002_1.gif') no-repeat center top;
+}
+
+.insertLogoPhotoImg {
+    position: absolute;
+    left: 420px;
+    top: 25px;
+}
+
+.check-item label {
+    cursor: pointer
+}
+
+.h10 {
+    font-size: 0;
+    height: 9px;
+    line-height: 0;
+}
+
+.sec-btn-right {
+    float: right;
+}
+/* ??????? ?Ï½?? */
+/* wmg-8218 recruit_load_layer */
+.recruit_load_layer_wrap {
+    position: relative;
+    z-index: 10;
+    text-align: left;
+}
+
+.recruit_load_bar {
+    margin-top: 34px;
+    width: 100%;
+    height: 55px;
+    text-align: left;
+}
+
+.recruit_load_bar .inner {
+    display: block;
+    clear: both;
+    *zoom: 1;
+    height: 25px;
+    *height: 55px;
+    padding: 14px 0;
+    background-color: #f6f8ff;
+    border: 1px solid #d8dcf3;
+}
+
+.recruit_load_bar .inner:after {
+    display: block;
+    clear: both;
+    content: "";
+}
+
+.recruit_load_bar .tit {
+    float: left;
+    *margin-top: 2px;
+    margin-left: 20px;
+    font-family: Malgun Gothic, "???? ????", NanumGothic, "????????";
+    font-size: 15px;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: -2px
+}
+
+.recruit_load_bar .btn_load_tit {
+    display: block;
+    float: left;
+    margin-left: 15px;
+    padding: 5px 27px 4px 10px;
+    *padding: 6px 27px 3px 10px;
+    width: 510px;
+    *width: 547px;
+    height: 12px;
+    background: #fff url(//www.saraminimage.co.kr/ui/resume/arr_recruit_load.png) 98% 50% no-repeat;
+    border: 1px solid #969696;
+    font-size: 12px;
+    font-family: gulim, "????";
+    color: #444;
+    text-align: left;
+}
+
+.recruit_load_bar .btn_load_tit:hover {
+    color: #444;
+    text-decoration: none;
+}
+
+.recruit_load_bar .btn_load_tit .load_tit {
+    font-weight: normal;
+}
+
+.recruit_load_bar .btn_load_close {
+    display: none;
+    position: absolute;
+    top: 19px;
+    right: 19px;
+    width: 17px;
+    height: 17px;
+    background: url(//www.saraminimage.co.kr/ui/resume/btn_layer_close.png) 0 0 no-repeat;
+}
+
+.recruit_load_bar.copy .tit {
+    display: none;
+}
+
+.recruit_load_bar.copy .load_tit {
+    display: block;
+    float: left;
+    margin-top: 2px;
+    margin-left: 20px;
+    font-family: Malgun Gothic, "???? ????", NanumGothic, "????????";
+    font-size: 15px;
+    font-weight: bold;
+    color: #444;
+    letter-spacing: -2px
+}
+
+.recruit_load_bar.copy .btn_recruit_load {
+    display: block;
+    float: left;
+    width: 141px;
+    margin-left: 15px;
+}
+
+.recruit_load_layer {
+    display: none;
+    width: 738px;
+    *width: 740px;
+    position: absolute;
+    top: 54px;
+    left: 0;
+    z-index: 99;
+    clear: both;
+    background-color: #fff;
+    border: 1px solid #d8dcf3;
+}
+
+.recruit_load_layer h4 {
+    color: #fff;
+    text-align: left;
+    font-weight: bold;
+    word-spacing: -1px;
+    position: relative;
+    letter-spacing: -1px;
+}
+
+.recruit_load_layer .recruit_load_table {
+    padding: 0 20px;
+    text-align: center;
+}
+
+.recruit_load_layer_wrap.on .recruit_load_bar .btn_load_tit {
+    visibility: hidden;
+}
+
+.recruit_load_layer_wrap.on .recruit_load_bar .btn_load_close {
+    display: block;
+}
+
+.recruit_load_layer_wrap.on .recruit_load_bar.copy .load_tit {
+    display: none;
+}
+
+.recruit_load_layer_wrap.on .recruit_load_bar.copy .tit {
+    display: block;
+}
+
+.recruit_load_layer_wrap.on .recruit_load_bar .btn_recruit_load {
+    display: none;
+}
+
+.recruit_load_layer_wrap.on .recruit_load_layer {
+    display: block;
+}
+
+.recruit_load_layer_wrap.on .recruit_load_layer .inner {
+    *height: 62px;
+}
+
+.recruit_load_layer table {
+    width: 698px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-bottom: 1px solid #e9e8e8;
+}
+
+.recruit_load_layer table caption,
+.recruit_load_layer table thead {
+    display: none;
+}
+
+.recruit_load_layer table td {
+    padding: 12px 0 12px;
+    border-bottom: 1px solid #e9e8e8;
+    font-family: gulim, "????";
+    font-size: 12px;
+    color: #444;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: -1px;
+}
+
+.recruit_load_layer table td.date {
+    text-align: left;
+    letter-spacing: 0;
+}
+
+.recruit_load_layer table td.load_tit {
+    text-align: left;
+}
+
+.recruit_load_layer table td.btns {
+    clear: both;
+    *zoom: 1;
+}
+
+.recruit_load_layer table td.btns::after {
+    display: block;
+    clear: both;
+    content: "";
+}
+
+.recruit_load_layer table td .btn {
+    display: block;
+    float: left;
+    width: 58px;
+    height: 17px;
+    font-family: gulim, "????";
+    font-size: 12px;
+    line-height: 19px;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: -1px;
+}
+
+.recruit_load_layer table td .blue {
+    margin-left: 20px;
+    border: 1px solid #6d82f3;
+    background-color: #6d82f3;
+    color: #fff;
+}
+
+.recruit_load_layer table td .white {
+    margin-left: 4px;
+    border: 1px solid #bebebe;
+    background-color: #fff;
+    color: #666;
+}
+
+.recruit_load_layer table td a {
+    color: #444;
+    text-decoration: underline;
+}
+
+.recruit_load_layer table td span {
+    color: #999;
+    margin-right: 6px;
+    font-family: dotum, "????";
+    font-size: 11px;
+}
+
+.recruit_load_layer table td span.on {
+    color: #ff7637;
+}
+
+.recruit_load_layer .paginate {
+    padding: 25px 0;
+    *padding-bottom: 30px;
+    position: relative;
+    text-align: center;
+}
+
+.recruit_load_layer .paginate a:hover {
+    text-decoration: none !important
+}
+
+.recruit_load_layer .paginate .num,
+.recruit_load_layer .paginate strong {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    background-color: #fff;
+    font-family: tahoma;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    line-height: normal;
+    margin-right: 1px;
+    text-decoration: none;
+    vertical-align: middle;
+    vertical-align: inherit\9;
+    padding-top: 5px;
+    *padding: 4px 0;
+    width: 24px;
+    height: 20px;
+}
+
+.recruit_load_layer .paginate strong {
+    color: #667df9 !important;
+    border: 1px solid #667df9;
+}
+
+.recruit_load_layer .spr {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    *margin-top: 6px;
+    overflow: hidden;
+    padding-left: 18px;
+    padding-right: 18px;
+    vertical-align: middle;
+    color: #666;
+    cursor: pointer;
+}
+
+.recruit_load_layer .page_num_space {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 2px;
+}
+/* //wmg-8218 recruit_load_layer */
+
+/* ??????? ???©ª? */
+.temp_cont * {
+    vertical-align: top
+}
+
+.temp_cont {
+    position: relative;
+    _z-index: 500;
+    width: 100%;
+    height: 820px;
+    background: #686868;
+}
+
+.temp_cont {
+    float: left;
+    width: 110px;
+}
+
+.temp_cont .temp_tit {
+    position: relative;
+    _z-index: 500;
+    padding: 18px 0 14px;
+    line-height: 17px;
+    color: #fff;
+    font-family: malgun Gothic, '???? ????', nanumGothic, '????????';
+    font-size: 15px;
+    font-weight: normal;
+    letter-spacing: -1px;
+    text-align: center;
+}
+
+.temp_cont .temp_tit .title {
+}
+
+.temp_cont .temp_tit #layerControlBtn.opened {
+    background-position: 100% 13px;
+}
+
+.temp_cont .temp_tit #layerControlBtn.closed {
+    background-position: 100% -37px;
+}
+
+.temp_cont .temp_list {
+    padding: 0 15px;
+}
+
+.temp_cont .temp_list .sub_txt {
+    font-family: dotum;
+    font-size: 11px;
+    color: #808080;
+    overflow: hidden;
+    *height: 1%
+}
+
+.temp_cont .temp_list .sub_txt .txt {
+    display: block;
+    letter-spacing: 0.01em;
+    padding-top: 4px;
+    float: left
+}
+
+.temp_cont .temp_list .sub_txt .no_use {
+    float: right
+}
+
+.temp_cont .temp_list .list_thumbs:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+.temp_cont .temp_list .list_thumbs li {
+    float: left;
+    margin-bottom: 15px;
+    position: relative
+}
+
+.temp_cont .temp_list .list_thumbs li.end {
+    margin-right: 0
+}
+
+.temp_cont .temp_list .list_thumbs li.on {
+    position: absolute;
+    z-index: 1000;
+    box-sizing: border-box;
+    background: url(http://www.saraminimage.co.kr/recruit/templete/bg_temp_check.png) 0 0 repeat;
+}
+
+.temp_cont .temp_list .list_thumbs li a img {
+    width: 90px;
+}
+
+.temp_cont .temp_list .list_thumbs li .icon_new {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.temp_cont .temp_list .list_thumbs li .view_link {
+    position: absolute;
+    top: 0;
+    right: 0
+}
+
+.temp_cont .temp_list .list_thumbs li p.over a {
+    width: 100%;
+    height: 100%;
+    font-family: dotum;
+    font-size: 11px;
+    color: #ddd;
+    background: url(http://www.saraminimage.co.kr/recruit/templete/bg_dot.png) 0 0 repeat;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.temp_cont .temp_list .list_thumbs li p.over a:hover {
+    color: #fff;
+    text-decoration: none
+}
+
+.temp_cont .temp_list .list_thumbs li p.over a .inner_txt {
+    display: block;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -7px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer
+}
+
+.temp_cont .temp_list .list_btns {
+    padding-top: 5px;
+    text-align: center;
+}
+
+.temp_cont .temp_list .temp_page {
+    height: 12px;
+    text-align: center;
+    margin-top: 10px;
+    overflow: hidden
+}
+
+.temp_cont .temp_list .temp_page span {
+    display: inline-block;
+    height: 12px;
+    font-family: dotum;
+    font-size: 11px;
+    vertical-align: top;
+    line-height: 1
+}
+
+.temp_cont .temp_list .temp_page span a {
+    border: none
+}
+
+.temp_cont .temp_list .temp_page span.go-prev a {
+    display: inline-block;
+    width: 8px;
+    height: 10px;
+    background: url(http://www.saraminimage.co.kr/recruit/templete/btn_temp_prev.gif) no-repeat 0 2px
+}
+
+.temp_cont .temp_list .temp_page span.go-next a {
+    display: inline-block;
+    width: 8px;
+    height: 10px;
+    background: url(http://www.saraminimage.co.kr/recruit/templete/btn_temp_next.gif) no-repeat 100% 2px
+}
+
+.temp_cont .temp_list .temp_page span.num {
+    padding-right: 2px;
+    width: 26px;
+    height: 10px;
+    text-align: center;
+    background: url(http://www.saraminimage.co.kr/recruit/templete/bg_temp_bar.gif) no-repeat 100% 1px
+}
+
+.temp_cont .temp_list .temp_page span.num a {
+    font-size: 12px;
+    color: #444
+}
+
+.temp_cont .temp_list .temp_page span.num a:hover {
+    font-weight: bold;
+    color: #4f75c8;
+    text-decoration: none
+}
+
+.temp_cont .temp_list .temp_page span.num a.on {
+    font-weight: bold;
+    color: #4f75c8
+}
+
+.temp_cont .temp_list .temp_page span.last {
+    width: 25px !important;
+    background: none !important
+}
+
+.temp_cont .paging {
+    position: absolute;
+    bottom: 0;
+    height: 21px;
+    padding: 15px;
+}
+
+.temp_cont .paging .page {
+    float: left;
+    margin-right: 12px;
+    font-size: 12px;
+    color: #c6c6c6;
+    letter-spacing: 0;
+    line-height: 21px;
+}
+
+.temp_cont .paging .page strong {
+    color: #fff;
+}
+
+.temp_cont .paging a {
+    float: left;
+    margin-right: 0;
+    width: 25px;
+    height: 21px;
+    background: url(//www.saraminimage.co.kr/recruit/templete/spr_ctrl_paging.png) 0 0 no-repeat;
+}
+
+.temp_cont .paging a.prev {
+    margin-right: -1px;
+    background-position: 0 0;
+}
+
+.temp_cont .paging a.next {
+    background-position: 100% 0;
+}
+
+.temp_btn {
+    text-align: right;
+    margin-top: 9px
+}
