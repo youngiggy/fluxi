@@ -44,8 +44,14 @@
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script src="js/FluxiStore.js"></script>
+        <script src="js/LayerLoader.js"></script>
         <script>
             var fluxiStore = new FluxiStore();
+            var layerLoader = new LayerLoader({
+                'rootLayerSelector' : 'body'
+            });
+
+            layerLoader.bindRootClickEvent();
         </script>
 
         <section id="cm_contents">
@@ -76,36 +82,10 @@
                                         <span class="chk_list_tit">담당업무</span>
                                         <div class="task_input_area">
                                             <div>
-                                                <ul class="task_list">
-                                                    <li>
-                                                        <span class="job_name">웹기획</span>
-                                                        <button type="button" class="btn_close_lpop01">닫기</button>
-                                                    </li>
-                                                    <li>
-                                                        <span class="job_name">UI/UX</span>
-                                                        <button type="button" class="btn_close_lpop01">닫기</button>
-                                                    </li>
-                                                    <li>
-                                                        <span class="job_name">UI/UX</span>
-                                                        <button type="button" class="btn_close_lpop01">닫기</button>
-                                                    </li>
-                                                    <li>
-                                                        <span class="job_name">UI/UX</span>
-                                                        <button type="button" class="btn_close_lpop01">닫기</button>
-                                                    </li>
-                                                    <li>
-                                                        <span class="job_name">UI/UX</span>
-                                                        <button type="button" class="btn_close_lpop01">닫기</button>
-                                                    </li>
-                                                    <li>
-                                                        <div>
-                                                            <input type="text" style="width:80px;">
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                                                <ul class="task_list"></ul>
                                             </div>
                                             <!-- 자동검색 영역 s -->
-                                            <div class="charge_job_select">
+                                            <div class="charge_job_select _autocomplete _close_layer">
                                                 <ul class="charge_job_list">
                                                     <li><label class="form_sp frm_chk02" for="chk_step01_1"><input type="checkbox" id="chk_step01_1"><span>IT·인터넷 &gt; 웹기획·웹마케팅·PM &gt; 웹기획</span></label></li>
                                                     <li><label class="form_sp frm_chk02" for="chk_step01_2"><input type="checkbox" id="chk_step01_2"><span>IT·인터넷 &gt; 웹기획·웹마케팅·PM &gt; 웹PD</span></label></li>
@@ -115,12 +95,12 @@
                                                 </ul>
                                                 <div class="select_btn_area">
                                                     <button type="button" class="btn_typ_b4">선택</button>
-                                                    <button type="button" class="btn_typ_c1">취소</button>
+                                                    <button type="button" class="btn_typ_c1 _close_layer">취소</button>
                                                 </div>
                                             </div>
                                             <!-- 자동검색 영역 e -->
                                         </div>
-                                        <button type="button" class="btn_typ_b1 btn_category" onclick="lpop_open('category_area')">카테고리 검색</button>
+                                        <button type="button" class="btn_typ_b1 btn_category _toggle_all_category">카테고리 검색</button>
 
                                         <!-- 카테고리 검색 s -->
                                         <div class="category_area">
@@ -185,53 +165,155 @@
                                             </ul>
                                             <div class="select_btn_area">
                                                 <button type="button" class="btn_typ_b4">선택</button>
-                                                <button type="button" class="btn_typ_c1">취소</button>
+                                                <button type="button" class="btn_typ_c1 _toggle_all_category">취소</button>
                                             </div>
                                         </div>
                                     </div>
-                                    <script>
-                                        //1. group을 정의
-                                        var storeGroup = 'job_category';
+<script>
+    //1. group을 정의
+    var storeGroup = 'job_category',
+            storeGroupWrapper = $('#' + storeGroup);
 
-                                        //2. data의 구조 정의
-                                        tmpData = {
-                                            "code" : {
-                                                "123" : "영업·고객상담",
-                                                "234" : "IT·인터넷 > 서버·네트워크·보안"
-                                            },
-                                            "keyword" : {
-                                                "345" : "일반영업",
-                                                "45" : "보안기술"
-                                            },
-                                        };
-                                        fluxiStore.setInitialData(storeGroup, tmpData);
+    //2. data의 구조 정의
+    tmpData = {//storeGroup
+        "job_category" : {//storeKey
+            "123": {//code
+                "name": "영업·고객상담",
+                "keyword": {
+                    "12" : "기업 영업",
+                    "2343" : "기술 영업 화이팅"
+                }
+            },
+            "456": {//code
+                "name": "SI 업체",
+                "keyword": {
+                    "654" : "FE개발자",
+                    "04563" : "풀스택노가다"
+                }
+            }
+        }
+    };
+    fluxiStore.setInitialDataIfEmpty(storeGroup, tmpData);
 
-                                        //3. 데이터(store)가 바뀌면 UI에 어떻게 적용할 지 등록
-                                        fluxiStore.storeChangeListener(storeGroup, function (data) {
-                                            var template = '' +
-                                                '<li>' +
-                                                '    <span class="job_name">{{keyword-name}}</span>' +
-                                                '    <button type="button" class="btn_close_lpop01" data-keyword="{{keyword}}">닫기</button>' +
-                                                '</li>';
-                                            var tmpContentArr = [];
-                                            if (data && data.keyword) {
-                                                for (var i in data.keyword) {
-                                                    if (data.keyword.hasOwnProperty(i)) {
-                                                        tmpContentArr.push(
-                                                                template.replace('{{keyword}}', i)
-                                                                        .replace('{{keyword-name}}', data.keyword[i])
-                                                        );
-                                                    }
-                                                }
-                                            }
-                                            $('#' + storeGroup).find('.task_list').html(tmpContentArr.join('\n'));
-                                        });
-                                        fluxiStore.emitChangeListener(storeGroup);
+    //3. UI event binding - store의 데이터를 변경한다
+    storeGroupWrapper.on('click', '.task_input_area > div', function () {
+        $(this).find('input:text').focus();
+    });
 
-                                        //4. UI event binding
-                                        $(storeGroup).on('click', function () {
-                                        });
-                                    </script>
+    var autocompleteLayerEl = storeGroupWrapper.find('._autocomplete');
+
+    storeGroupWrapper.on('keypress keydown keyup change', '._task_list_input', function () {
+        var searchWord = $(this).val();
+
+        if (searchWord === '') {
+            layerLoader.truncate();
+        } else {
+            autocompleteLayerEl.show();
+
+            layerLoader.addTruncateFuntion({
+                'id' : '_autocomplete',
+                'function' : function () {
+                    storeGroupWrapper.find('input:text').val('');
+                    autocompleteLayerEl.hide();
+                }
+            });
+
+            $.ajax({
+                url: 'auto-complete.html',
+                data: {
+                    'keyword' : encodeURIComponent(searchWord),
+                    'tcode' : 24
+                },
+                type:'POST',
+                dataType: 'json'
+            }).done(function(ret) {
+                var fillContentArr = [],
+                        charge_job_list_el = storeGroupWrapper.find('.charge_job_list'),
+                        template = '<li><label class="form_sp frm_chk02" for="chk_step01_{{id}}"><input type="checkbox" id="chk_step01_{{id}}"><span>{{keyword-name-full}}</span></label></li>',
+                        mainContent = '<li>검색 결과가 없습니다.</li>',
+                        contentsRows = {}, codeArr;
+
+                if (ret && ret.contents) {
+                    if (window.JSON && JSON.parse) {
+                        contentsRows = JSON.parse(ret.contents);
+                    } else {
+                        eval('(' + 'contentsRows = ' + ret.contents + ')');
+                    }
+                    for (var codeStr in contentsRows) {
+                        if (!contentsRows.hasOwnProperty(codeStr)) {
+                            continue;
+                        }
+                        codeArr = codeStr.split('|');
+                        fillContentArr.push(
+                            template.replace(/\{\{id}}/g, codeArr[0] + '_' + codeArr[1])
+                                .replace('{{keyword-name-full}}', contentsRows[codeStr])
+                        );
+                    }
+                }
+                if (fillContentArr && fillContentArr.length) {
+                    mainContent = fillContentArr.join('');
+                }
+                charge_job_list_el.find('li').remove();
+                charge_job_list_el.html(mainContent);
+            });
+        }
+    });
+    //button action
+    storeGroupWrapper.on('click', 'a, button', function (event) {
+        var thisEl = $(this);
+
+        if (thisEl.hasClass('_remove_keyword')) {
+            //string 타입으로 변환
+            // - template에서 code를 replace하면 나중에 .data()로 가져올 때 int로 인식한다.
+            var strKeyword = thisEl.data('keyword') + '';
+            fluxiStore.updateJobCategoryExcludeWith([strKeyword]);
+
+        } else if (thisEl.hasClass('_toggle_all_category')) {
+            storeGroupWrapper.find('.category_area').toggle();
+
+        } else if (thisEl.hasClass('_close_layer')) {
+            layerLoader.truncate();
+        }
+
+        //이벤트가 task_input_area로 확산되는 걸 방지
+        event.stopPropagation();
+    });
+    //이벤트가 밖으로 확산되는 걸 방지
+    storeGroupWrapper.on('click', function (event) {
+        event.stopPropagation();
+    });
+
+    //4. 데이터(store)가 바뀌면 UI에 어떻게 적용할 지 등록
+    fluxiStore.storeChangeListener(storeGroup, function () {
+        //task_list 채우기
+        var template, mainContent, appendHtml, fillContentArr;
+        template = '' +
+            '<li>\n' +
+            '    <span class="job_name">{{keyword-name}}</span>\n' +
+            '    <button type="button" class="btn_close_lpop01 _remove_keyword" data-code="{{code}}" data-keyword="{{keyword}}">닫기</button>\n' +
+            '</li>\n';
+        mainContent = '<li>&nbsp;</li>';
+        appendHtml = '\n<li><div><input class="_task_list_input" type="text" style="width:80px;" autocomplete="off"></div></li>\n';
+
+        fillContentArr = fluxiStore.inspectJobCategory(function (callbackData) {
+            return template.replace('{{keyword}}', callbackData.keyword)
+                    .replace('{{keyword-name}}', callbackData.keywordName)
+                    .replace('{{code-name}}', callbackData.codeName)
+                    .replace('{{code}}', callbackData.code);
+        });
+        if (fillContentArr && fillContentArr.length) {
+            mainContent = fillContentArr.join('');
+        }
+        storeGroupWrapper.find('.task_list').html(mainContent + appendHtml);
+
+        //자동완성
+        //clonestore 생성하기
+
+        //전체 카테고리
+    });
+    fluxiStore.emitChangeListener(storeGroup);//초기값에 따른 UI 초기화
+
+</script>
                                     <!--component : job_category e-->
 
                                     <!--component : career s-->
