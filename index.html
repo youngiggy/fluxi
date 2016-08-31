@@ -44,14 +44,14 @@
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script src="js/FluxiStore.js"></script>
-        <script src="js/LayerLoader.js"></script>
+        <script src="js/LayerHandler.js"></script>
         <script>
             var fluxiStore = new FluxiStore();
-            var layerLoader = new LayerLoader({
+            var layerHandler = new LayerHandler({
                 'rootLayerSelector' : 'body'
             });
 
-            layerLoader.bindRootClickEvent();
+            layerHandler.bindRootClickEvent();
         </script>
 
         <section id="cm_contents">
@@ -206,11 +206,11 @@
         var searchWord = $(this).val();
 
         if (searchWord === '') {
-            layerLoader.truncate();
+            layerHandler.truncate();
         } else {
             autocompleteLayerEl.show();
 
-            layerLoader.addTruncateFuntion({
+            layerHandler.addTruncateFuntion({
                 'id' : '_autocomplete',
                 'function' : function () {
                     storeGroupWrapper.find('input:text').val('');
@@ -272,7 +272,7 @@
             storeGroupWrapper.find('.category_area').toggle();
 
         } else if (thisEl.hasClass('_close_layer')) {
-            layerLoader.truncate();
+            layerHandler.truncate();
         }
 
         //이벤트가 task_input_area로 확산되는 걸 방지

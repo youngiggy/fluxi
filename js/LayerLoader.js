@@ -3,7 +3,7 @@
 /*global console:false*/
 /*global confirm:false*/
 /*jshint -W100*/
-function LayerLoader(opt) {
+function LayerHandler(opt) {
     if (window.jQuery === undefined) {
         this.log('Check jQuery Loaded!');
     }
@@ -14,7 +14,7 @@ function LayerLoader(opt) {
     this.opt = opt || {};
     this.rootLayerSelector = this.opt.rootLayerSelector || 'body';
 }
-LayerLoader.prototype = {
+LayerHandler.prototype = {
     "bindRootClickEvent": function () {
         var self = this;
         jQuery(this.rootLayerSelector).on('click', function () {
