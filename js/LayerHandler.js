@@ -30,7 +30,9 @@ LayerHandler.prototype = {
             }
 
             truncateRule = this.truncateRules[i];
-            truncateRule.function();
+            if (truncateRule.execute) {
+                truncateRule.execute();
+            }
         }
         this.truncateRules = {};
     },
