@@ -1,8 +1,4 @@
-/* --- options for jshint --- */
-/*global alert:false*/
-/*global console:false*/
-/*global confirm:false*/
-/*jshint -W100*/
+
 function LayerHandler(opt) {
     if (window.jQuery === undefined) {
         this.log('Check jQuery Loaded!');
