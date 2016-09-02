@@ -190,6 +190,11 @@
     fluxiStore.setInitialDataIfEmpty(storeGroup, tmpData);
 
     //3. UI event binding - store의 데이터를 변경한다
+    //이벤트가 밖으로 확산되는 걸 방지
+    storeGroupWrapper.on('click', function (event) {
+        event.stopPropagation();
+    });
+
     //실제 text input의 위치를 찾기 어려워 디자인된 text input 영역을 클릭할 때도포커스를 준다
     storeGroupWrapper.on('click', '.task_input_area > div', function () {
         $(this).find('input:text').focus();
@@ -273,10 +278,6 @@
         }
 
         //이벤트가 task_input_area로 확산되는 걸 방지
-        event.stopPropagation();
-    });
-    //이벤트가 밖으로 확산되는 걸 방지
-    storeGroupWrapper.on('click', function (event) {
         event.stopPropagation();
     });
 
