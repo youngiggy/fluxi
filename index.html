@@ -196,6 +196,7 @@
 
     var autocompleteLayerEl = storeGroupWrapper.find('._autocomplete');
 
+    //_task_list_input는 동적으로 생성되기 때문에, 상위 엘리먼트에 이벤트를 위임한다
     storeGroupWrapper.on('keypress keydown keyup change', '._task_list_input', function () {
         var searchWord = $(this).val();
 
