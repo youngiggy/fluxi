@@ -48,12 +48,12 @@ FluxiStore.prototype = {
         }
     },
 
-    //validator - unused warning 때문에 key를 string으로 유지
-    "addValidator" : function (group, validateFunc, defaultValid) {
+    //validator
+    addValidator : function (group, validateFunc, defaultValid) {
         this.valid[group] = defaultValid === true;
         this.validators[group] = validateFunc;
     },
-    "allValid" : function () {
+    allValid : function () {
         for (var i in this.validators) {
             if (this.validators.hasOwnProperty(i)) {
                 if (this.validators[i] === false) {

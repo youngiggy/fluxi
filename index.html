@@ -310,6 +310,11 @@
     });
     fluxiStore.emitChangeListener(storeGroup);//초기값에 따른 UI 초기화
 
+    //5.validation 조건 추가
+    fluxiStore.addValidator(function(){
+        return fluxiStore.inspectJobCategory();
+    });
+
 </script>
                                     <!--component : job_category e-->
 
