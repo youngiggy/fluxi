@@ -190,6 +190,7 @@
     fluxiStore.setInitialDataIfEmpty(storeGroup, tmpData);
 
     //3. UI event binding - store의 데이터를 변경한다
+    //실제 text input의 위치를 찾기 어려워 디자인된 text input 영역을 클릭할 때도포커스를 준다
     storeGroupWrapper.on('click', '.task_input_area > div', function () {
         $(this).find('input:text').focus();
     });
@@ -201,10 +202,11 @@
         var searchWord = $(this).val();
 
         if (searchWord === '') {
+            //초기화할 레이어가 있다면, 실행
             layerHandler.truncate();
         } else {
+            //레이어를 노출하고, 레이어가 초기화되기 위한 일을 지정한다
             autocompleteLayerEl.show();
-
             layerHandler.addTruncateFuntion({
                 'id' : '_autocomplete',
                 'execute' : function () {
@@ -301,9 +303,8 @@
         }
         storeGroupWrapper.find('.task_list').html(mainContent + appendHtml);
 
-        //자동완성
-        //clonestore 생성하기
-
+        //clonestore 생성이 필요한 경우
+        //자동 완성
         //전체 카테고리
     });
     fluxiStore.emitChangeListener(storeGroup);//초기값에 따른 UI 초기화
