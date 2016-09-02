@@ -15,13 +15,13 @@ function LayerHandler(opt) {
     this.rootLayerSelector = this.opt.rootLayerSelector || 'body';
 }
 LayerHandler.prototype = {
-    "bindRootClickEvent": function () {
+    bindRootClickEvent : function () {
         var self = this;
         jQuery(this.rootLayerSelector).on('click', function () {
             self.truncate();
         });
     },
-    "truncate" : function () {
+    truncate : function () {
         var truncateRule;
 
         for (var i in this.truncateRules) {
@@ -36,7 +36,7 @@ LayerHandler.prototype = {
         }
         this.truncateRules = {};
     },
-    "addTruncateFuntion": function (truncateRuleObj) {
+    addTruncateFuntion : function (truncateRuleObj) {
         if (!this.truncateRules[truncateRuleObj.id]) {
             this.truncateRules[truncateRuleObj.id] = truncateRuleObj;
         }

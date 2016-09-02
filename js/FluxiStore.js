@@ -9,7 +9,7 @@ function FluxiStore(data) {
     // this.opt = opt || {};
 }
 FluxiStore.prototype = {
-    "dispatch" : function (group, key, val) {
+    dispatch : function (group, key, val) {
         //change store
         // val = val === undefined ? this.resolve(group, key) : val;
         this.save(group, key, val);
@@ -19,13 +19,13 @@ FluxiStore.prototype = {
         //todo : post dispatch
         // - ex) validation check
     },
-    "setInitialDataIfEmpty" : function (group, initialData) {
+    setInitialDataIfEmpty : function (group, initialData) {
         if (this.data[group] === undefined) {
             initialData = initialData || {};
             this.data[group] = initialData;
         }
     },
-    "save" : function (group, key, val) {
+    save : function (group, key, val) {
         if (this.data[group] === undefined) {
             this.data[group] = {};
         }
@@ -33,22 +33,22 @@ FluxiStore.prototype = {
     },
 
     //add event listener
-    "storeChangeListener" : function (group, func) {
+    storeChangeListener : function (group, func) {
         if (this.listeners[group] === undefined) {
             this.listeners[group] = [];
         }
         this.listeners[group].push(func);
     },
-    "emitChangeListener" : function (group) {
+    emitChangeListener : function (group) {
         if (this.listeners[group] && this.listeners[group].length) {
             var len = this.listeners[group].length;
             for (var i = 0; i < len; i++) {
-                this.listeners[group][i](this.data[group]);
+                this.listeners[group][i]();
             }
         }
     },
 
-    //validator
+    //validator - unused warning 때문에 key를 string으로 유지
     "addValidator" : function (group, validateFunc, defaultValid) {
         this.valid[group] = defaultValid === true;
         this.validators[group] = validateFunc;
@@ -82,7 +82,7 @@ FluxiStore.prototype = {
      * @param excludes
      * @returns {Array}
      */
-    "inspectJobCategory" : function (callbackFunc, excludes) {
+    inspectJobCategory : function (callbackFunc, excludes) {
         excludes = excludes || [];
 
         var data = this.data.job_category ? this.data.job_category.job_category : {},
@@ -113,7 +113,7 @@ FluxiStore.prototype = {
         }
         return contentArr;
     },
-    "updateJobCategoryExcludeWith" : function (excludes) {
+    updateJobCategoryExcludeWith : function (excludes) {
         var keywordRows = this.inspectJobCategory(null, excludes),
             len = keywordRows.length,
             newJobCategory = {},
