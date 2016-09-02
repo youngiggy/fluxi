@@ -16,8 +16,9 @@ FluxiStore.prototype = {
 
         this.emitChangeListener(group);
 
-        //todo : post dispatch
-        // - ex) validation check
+        //post dispatch
+        //validation check
+        console.log('validation checked : ' + this.allValid());
     },
     setInitialDataIfEmpty : function (group, initialData) {
         if (this.data[group] === undefined) {
