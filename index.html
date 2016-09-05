@@ -41,6 +41,13 @@
         <![endif]-->
 
 
+        <style>
+            /*todo 삭제: 임시로 넣었음*/
+            .category_area {top:50px;}
+        </style>
+
+
+
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script src="js/FluxiStore.js"></script>
@@ -82,7 +89,9 @@
                                         <span class="chk_list_tit">담당업무</span>
                                         <div class="task_input_area">
                                             <div>
-                                                <ul class="task_list"></ul>
+                                                <ul class="task_list _job_category_list">
+                                                    <li><div><input class="_job_category_list_input" type="text" style="width:80px;" autocomplete="off"></div></li>
+                                                </ul>
                                             </div>
                                             <!-- 자동검색 영역 s -->
                                             <div class="charge_job_select _autocomplete _close_layer">
@@ -166,7 +175,7 @@
 <script>
     //1. group을 정의
     var storeGroup = 'job_category',
-            storeGroupWrapper = $('#' + storeGroup);
+        jobCategoryWrapper = $('#job_category');
 
     //2. data의 구조 정의 (생략 가능)
     tmpData = {//storeGroup
@@ -191,77 +200,83 @@
 
     //3. UI event binding - store의 데이터를 변경한다
     //이벤트가 밖으로 확산되는 걸 방지
-    storeGroupWrapper.on('click', function (event) {
+    jobCategoryWrapper.on('click', function (event) {
         event.stopPropagation();
     });
 
     //실제 text input의 위치를 찾기 어려워 디자인된 text input 영역을 클릭할 때도포커스를 준다
-    storeGroupWrapper.on('click', '.task_input_area > div', function () {
+    jobCategoryWrapper.on('click', '.task_input_area > div', function () {
         $(this).find('input:text').focus();
     });
 
-    var autocompleteLayerEl = storeGroupWrapper.find('._autocomplete');
+    var autocompleteResultLayer = jobCategoryWrapper.find('._autocomplete');
 
-    //_task_list_input는 동적으로 생성되기 때문에, 상위 엘리먼트에 이벤트를 위임한다
-    storeGroupWrapper.on('keypress keydown keyup change', '._task_list_input', function () {
-        var searchWord = $(this).val();
+    jobCategoryWrapper.find('._job_category_list_input').on('keypress keydown keyup change', function () {
+        var self = this;
+        setTimeout(function () {
+            var searchWord = $(self).val();
 
-        if (searchWord === '') {
-            //초기화할 레이어가 있다면, 실행
-            layerHandler.truncate();
-        } else {
-            //레이어를 노출하고, 레이어가 초기화되기 위한 일을 지정한다
-            autocompleteLayerEl.show();
-            layerHandler.addTruncateFuntion({
-                'id' : '_autocomplete',
-                'execute' : function () {
-                    storeGroupWrapper.find('input:text').val('');
-                    autocompleteLayerEl.hide();
-                }
-            });
+            if (searchWord === '') {
+                //초기화할 레이어가 있다면, 실행
+                layerHandler.truncate();
+            } else {
+                //레이어를 노출하고, 레이어가 초기화되기 위한 일을 지정한다
+                autocompleteResultLayer.show();
 
-            $.ajax({
-                url: 'auto-complete.html',
-                data: {
-                    'keyword' : encodeURIComponent(searchWord),
-                    'tcode' : 24
-                },
-                type:'POST',
-                dataType: 'json'
-            }).done(function(ret) {
-                var fillContentArr = [],
-                        charge_job_list_el = storeGroupWrapper.find('.charge_job_list'),
-                        template = '<li><label class="form_sp frm_chk02" for="chk_step01_{{id}}"><input type="checkbox" id="chk_step01_{{id}}"><span>{{keyword-name-full}}</span></label></li>',
-                        mainContent = '<li>검색 결과가 없습니다.</li>',
-                        contentsRows = {}, codeArr;
-
-                if (ret && ret.contents) {
-                    if (window.JSON && JSON.parse) {
-                        contentsRows = JSON.parse(ret.contents);
-                    } else {
-                        eval('(' + 'contentsRows = ' + ret.contents + ')');
+                var truncateId = '_autocomplete';
+                layerHandler.addTruncateFuntion({
+                    'id' : truncateId,
+                    'execute' : function () {
+                        jobCategoryWrapper.find('._job_category_list_input').val('');
+                        autocompleteResultLayer.hide();
                     }
-                    for (var codeStr in contentsRows) {
-                        if (!contentsRows.hasOwnProperty(codeStr)) {
-                            continue;
+                });
+                layerHandler.truncate([truncateId]);//해당 아이디를 제외하고 초기화
+
+                $.ajax({
+                    url: 'auto-complete.html',
+                    data: {
+                        'keyword' : encodeURIComponent(searchWord),
+                        'tcode' : 24
+                    },
+                    type:'POST',
+                    dataType: 'json'
+                }).done(function(ret) {
+                    var fillContentArr = [],
+                            template = '<li><label class="form_sp frm_chk02" for="chk_step01_{{id}}"><input type="checkbox" id="chk_step01_{{id}}"><span>{{keyword-name-full}}</span></label></li>',
+                            mainContent = '<li>검색 결과가 없습니다.</li>',
+                            contentsRows = {}, codeArr;
+
+                    if (ret && ret.contents) {
+                        if (window.JSON && JSON.parse) {
+                            contentsRows = JSON.parse(ret.contents);
+                        } else {
+                            eval('(' + 'contentsRows = ' + ret.contents + ')');
                         }
-                        codeArr = codeStr.split('|');
-                        fillContentArr.push(
-                            template.replace(/\{\{id}}/g, codeArr[0] + '_' + codeArr[1])
-                                .replace('{{keyword-name-full}}', contentsRows[codeStr])
-                        );
+                        for (var codeStr in contentsRows) {
+                            if (!contentsRows.hasOwnProperty(codeStr)) {
+                                continue;
+                            }
+                            codeArr = codeStr.split('|');
+                            fillContentArr.push(
+                                template
+                                    .replace(/\{\{id}}/g, codeArr[0] + '_' + codeArr[1])
+                                    .replace('{{keyword-name-full}}', contentsRows[codeStr])
+                            );
+                        }
                     }
-                }
-                if (fillContentArr && fillContentArr.length) {
-                    mainContent = fillContentArr.join('');
-                }
-                charge_job_list_el.find('li').remove();
-                charge_job_list_el.html(mainContent);
-            });
-        }
+                    if (fillContentArr && fillContentArr.length) {
+                        mainContent = fillContentArr.join('');
+                    }
+                    autocompleteResultLayer.find('ul')
+                            .empty()
+                            .html(mainContent);
+                });
+            }
+        }, 10);
     });
     //button action
-    storeGroupWrapper.on('click', 'a, button', function (event) {
+    jobCategoryWrapper.on('click', 'a, button', function (event) {
         var thisEl = $(this);
 
         if (thisEl.hasClass('_remove_keyword')) {
@@ -269,9 +284,24 @@
             // - template에서 code를 replace하면 나중에 .data()로 가져올 때 int로 인식한다.
             var strKeyword = thisEl.data('keyword') + '';
             fluxiStore.updateJobCategoryExcludeWith([strKeyword]);
+            layerHandler.truncate();
 
         } else if (thisEl.hasClass('_toggle_all_category')) {
-            storeGroupWrapper.find('.category_area').toggle();
+            var allCategoryLayer = jobCategoryWrapper.find('.category_area');
+            if (allCategoryLayer.css('display') !== 'none') {
+                layerHandler.truncate();
+            } else {
+                allCategoryLayer.show();
+
+                var truncateId = 'job_category_all';
+                layerHandler.addTruncateFuntion({
+                    'id' : truncateId,
+                    'execute' : function () {
+                        allCategoryLayer.hide();
+                    }
+                });
+                layerHandler.truncate([truncateId]);//해당 아이디를 제외하고 초기화
+            }
 
         } else if (thisEl.hasClass('_close_layer')) {
             layerHandler.truncate();
@@ -283,15 +313,13 @@
 
     //4. 데이터(store)가 바뀌면 UI에 어떻게 적용할 지 Repainter 정의
     fluxiStore.defineRepainter(storeGroup, function () {
-        //task_list 채우기
-        var template, mainContent, appendHtml, fillContentArr;
+        //_job_category_list 채우기
+        var template, fillContentArr;
         template = '' +
-            '<li>\n' +
+            '<li class="_keyword_selected">\n' +
             '    <span class="job_name">{{keyword-name}}</span>\n' +
             '    <button type="button" class="btn_close_lpop01 _remove_keyword" data-code="{{code}}" data-keyword="{{keyword}}">닫기</button>\n' +
             '</li>\n';
-        mainContent = '<li>&nbsp;</li>';
-        appendHtml = '\n<li><div><input class="_task_list_input" type="text" style="width:80px;" autocomplete="off"></div></li>\n';
 
         fillContentArr = fluxiStore.inspectJobCategory(function (callbackData) {
             return template.replace('{{keyword}}', callbackData.keyword)
@@ -299,10 +327,11 @@
                     .replace('{{code-name}}', callbackData.codeName)
                     .replace('{{code}}', callbackData.code);
         });
+
+        jobCategoryWrapper.find('li._keyword_selected').remove();
         if (fillContentArr && fillContentArr.length) {
-            mainContent = fillContentArr.join('');
+            jobCategoryWrapper.find('._job_category_list').prepend(fillContentArr.join(''));
         }
-        storeGroupWrapper.find('.task_list').html(mainContent + appendHtml);
 
         //clonestore 생성이 필요한 경우
         //자동 완성
@@ -318,14 +347,15 @@
 
     //7.validation 조건 추가
     fluxiStore.addValidator(function(){
-        return fluxiStore.inspectJobCategory(null);
+        var selectedArr = fluxiStore.inspectJobCategory(null);
+        return selectedArr.length > 0;
     });
 
 </script>
                                     <!--component : job_category e-->
 
                                     <!--component : career s-->
-                                    <div class="career_chk_area">
+                                    <div id="career" class="career_chk_area">
                                         <span class="chk_list_tit">경력여부</span>
                                         <ul class="chk_list">
                                             <li><label class="form_sp frm_chk02" for="chk_career01"><input type="checkbox" id="chk_career01"><span>신입</span></label></li>
@@ -348,8 +378,52 @@
                                                     <label class="form_sp frm_chk02" for="chk_career03_1"><input type="checkbox" id="chk_career03_1"><span>신입도 가능</span></label>
                                                 </div>
                                             </li>
+                                            <li style="float: right;">
+                                                <input type="text" id="lastJobCategory" class="frm_input01 " value="">
+                                            </li>
                                         </ul>
                                     </div>
+
+<script>
+    //1. group을 정의
+    var storeGroup = 'career',
+        careerWrapper = $('#' + storeGroup);
+
+    //2. data의 구조 정의 (생략 가능)
+    tmpData = {//storeGroup
+        "lastJobCategory" : ''//storeKey
+    };
+    fluxiStore.setInitialDataIfEmpty(storeGroup, tmpData);
+
+    //3. UI event binding - store의 데이터를 변경한다
+    //do nothing
+
+    //4. 데이터(store)가 바뀌면 UI에 어떻게 적용할 지 Repainter 정의
+    fluxiStore.defineRepainter(storeGroup, function () {
+        //제 2의 영역 채우기
+        var fillContentArr, lastInserted = [];
+
+        fillContentArr = fluxiStore.inspectJobCategory(null);
+        if (fillContentArr && fillContentArr.length) {
+            lastInserted = fillContentArr[fillContentArr.length - 1];
+        }
+        $('#lastJobCategory').val(lastInserted.keywordName || '');
+
+        //clonestore 생성이 필요한 경우
+        //자동 완성
+        //전체 카테고리
+    });
+
+    //5.Repainter를 실행할 store 선택
+    var storeGroupsToWatch = [storeGroup, 'job_category'];
+    fluxiStore.addChangeListener(storeGroup, storeGroupsToWatch);
+
+    //6.초기값으로 repainting
+    fluxiStore.emitChangeListener(storeGroup);
+
+    //7.validation 조건 추가
+    //do nothing
+</script>
                                     <!--component : career e-->
 
                                 </form>
