@@ -1,13 +1,14 @@
 
 function FluxiStore(data) {
+    if (window.jQuery === undefined) {
+        this.log('jQuery is not Loaded!');
+    }
+
     this.data = data || {};
     this.repainters = {};
     this.listeners = {};
     this.valid = {};
     this.validators = {};
-    // this.resolvers = {};
-
-    // this.opt = opt || {};
 }
 FluxiStore.prototype = {
     dispatch : function (group, key, val) {
