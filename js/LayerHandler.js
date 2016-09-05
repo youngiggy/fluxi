@@ -17,20 +17,20 @@ LayerHandler.prototype = {
             self.truncate();
         });
     },
-    truncate : function () {
-        var truncateRule;
-
+    truncate : function (excludes) {
         for (var i in this.truncateRules) {
             if (!this.truncateRules.hasOwnProperty(i)) {
                 continue;
             }
+            if (excludes && jQuery.inArray(i, excludes) !== -1) {
+                continue;
+            }
 
-            truncateRule = this.truncateRules[i];
-            if (truncateRule.execute) {
-                truncateRule.execute();
+            if (this.truncateRules[i] && this.truncateRules[i].execute) {
+                this.truncateRules[i].execute();
+                delete this.truncateRules[i];
             }
         }
-        this.truncateRules = {};
     },
     addTruncateFuntion : function (truncateRuleObj) {
         if (!this.truncateRules[truncateRuleObj.id]) {
