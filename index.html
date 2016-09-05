@@ -168,7 +168,7 @@
     var storeGroup = 'job_category',
             storeGroupWrapper = $('#' + storeGroup);
 
-    //2. data의 구조 정의
+    //2. data의 구조 정의 (생략 가능)
     tmpData = {//storeGroup
         "job_category" : {//storeKey
             "123": {//code
@@ -281,8 +281,8 @@
         event.stopPropagation();
     });
 
-    //4. 데이터(store)가 바뀌면 UI에 어떻게 적용할 지 등록
-    fluxiStore.storeChangeListener(storeGroup, function () {
+    //4. 데이터(store)가 바뀌면 UI에 어떻게 적용할 지 Repainter 정의
+    fluxiStore.defineRepainter(storeGroup, function () {
         //task_list 채우기
         var template, mainContent, appendHtml, fillContentArr;
         template = '' +
@@ -308,11 +308,17 @@
         //자동 완성
         //전체 카테고리
     });
-    fluxiStore.emitChangeListener(storeGroup);//초기값에 따른 UI 초기화
 
-    //5.validation 조건 추가
+    //5.Repainter를 실행할 store 선택
+    var storeGroupsToWatch = [storeGroup];
+    fluxiStore.addChangeListener(storeGroup, storeGroupsToWatch);
+
+    //6.초기값으로 repainting
+    fluxiStore.emitChangeListener(storeGroup);
+
+    //7.validation 조건 추가
     fluxiStore.addValidator(function(){
-        return fluxiStore.inspectJobCategory();
+        return fluxiStore.inspectJobCategory(null);
     });
 
 </script>
@@ -356,6 +362,7 @@
         </section>
 
 
+        <div id="dimmed"></div>
 
 
         <script src="js/plugins.js"></script>

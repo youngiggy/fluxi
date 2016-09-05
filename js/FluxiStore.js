@@ -1,6 +1,7 @@
 
 function FluxiStore(data) {
     this.data = data || {};
+    this.repainters = {};
     this.listeners = {};
     this.valid = {};
     this.validators = {};
@@ -18,7 +19,7 @@ FluxiStore.prototype = {
 
         //post dispatch
         //validation check
-        console.log('validation checked : ' + this.allValid());
+        this.log('validation checked : ' + this.allValid());
     },
     setInitialDataIfEmpty : function (group, initialData) {
         if (this.data[group] === undefined) {
@@ -33,12 +34,27 @@ FluxiStore.prototype = {
         this.data[group][key] = val;
     },
 
-    //add event listener
-    storeChangeListener : function (group, func) {
-        if (this.listeners[group] === undefined) {
-            this.listeners[group] = [];
+    //define repainter
+    defineRepainter : function (group, func) {
+        if (this.repainters[group] !== undefined) {
+            this.log('WARNING : Redefined ' + group + ' repainter');
         }
-        this.listeners[group].push(func);
+        this.repainters[group] = func;
+    },
+
+    //add repainter to event listener
+    addChangeListener : function (repaintGroup, storeGroupsToWatch, func) {
+        var len = storeGroupsToWatch.length,
+            targetGroup;
+        func = func || this.repainters[repaintGroup];
+
+        for (var i = 0; i < len; i++) {
+            targetGroup = storeGroupsToWatch[i];
+            if (this.listeners[targetGroup] === undefined) {
+                this.listeners[targetGroup] = [];
+            }
+            this.listeners[targetGroup].push(func);
+        }
     },
     emitChangeListener : function (group) {
         if (this.listeners[group] && this.listeners[group].length) {
@@ -136,6 +152,11 @@ FluxiStore.prototype = {
         }
 
         this.dispatch('job_category', 'job_category', newJobCategory);
+    },
+    log : function (msg) {
+        if (window.console) {
+            console.log(msg);
+        }
     }
 };
 
